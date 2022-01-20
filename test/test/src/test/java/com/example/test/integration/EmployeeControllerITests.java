@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.testcontainers.containers.MySQLContainer;
@@ -28,19 +30,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@Testcontainers // test container 
-public class EmployeeControllerITests {
+//@Testcontainers // test container 
+public class EmployeeControllerITests extends AbstractionBaseTest {
 
 	// adding MySQL container
 	// before testing, should check -> Is docker running
-	@Container
-	private static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest")  // params -> docker image name
-					.withUsername("username")
-					.withPassword("password") // <- can assign values
-					.withDatabaseName("ems");
+//	@Container
+//	private static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest")  // params -> docker image name
+//					.withUsername("username")
+//					.withPassword("password") // <- can assign values
+//					.withDatabaseName("ems");
 	// 1) test container pull mysql docker image from the docker hub
 	// 2) Deploy MySQL in a docker container
 	// 3) Run the Integration tests with MySQL database(deployed in docker container)
+	
+	
+	
+//	@DynamicPropertySource
+//	public static void dynamicPropertiesSource(DynamicPropertyRegistry registry) {
+//		registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
+//		registry.add("spring.datasource.username", mySQLContainer::getUsername);
+//		registry.add("spring.datasource.password", mySQLContainer::getPassword);
+//	}
+	
 	
     @Autowired
     private MockMvc mockMvc;
@@ -59,11 +71,11 @@ public class EmployeeControllerITests {
     @Test
     public void givenEmployeeObject_whenCreateEmployee_thenReturnSavedEmployee() throws Exception {
         
-    	System.out.println("mysql container username : " + mySQLContainer.getUsername()); // username : test(default)
-    	System.out.println("mysql container password : " + mySQLContainer.getPassword());  // password : test(default)
-    	System.out.println("mysql container database name : " + mySQLContainer.getDatabaseName());  // database name :  test(default)
-    	System.out.println("mysql container JdbcUrl : " + mySQLContainer.getJdbcUrl()); // jdbc:mysql://localhost:[port]/test(default)
-    	
+//    	System.out.println("mysql container username : " + mySQLContainer.getUsername()); // username : test(default)
+//    	System.out.println("mysql container password : " + mySQLContainer.getPassword());  // password : test(default)
+//    	System.out.println("mysql container database name : " + mySQLContainer.getDatabaseName());  // database name :  test(default)
+//    	System.out.println("mysql container JdbcUrl : " + mySQLContainer.getJdbcUrl()); // jdbc:mysql://localhost:[port]/test(default)
+//    	
     	
     	// given - precondition or setup
         Employee employee = Employee.builder()
