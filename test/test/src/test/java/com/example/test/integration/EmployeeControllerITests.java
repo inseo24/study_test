@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 //@Testcontainers // test container 
-public class EmployeeControllerITests extends AbstractionBaseTest {
+public class EmployeeControllerITests extends AbstractContainerBaseTest {
 
 	// adding MySQL container
 	// before testing, should check -> Is docker running

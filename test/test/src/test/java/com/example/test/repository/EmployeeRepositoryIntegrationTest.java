@@ -1,5 +1,6 @@
 package com.example.test.repository;
 
+import com.example.test.integration.AbstractContainerBaseTest;
 import com.example.test.model.Employee;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +19,7 @@ import java.util.Optional;
 // Integration testing Repository using MySQL database -> @AutoConfigureTestDatabase
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class EmployeeRepositoryIntegrationTest {
+public class EmployeeRepositoryIntegrationTest extends AbstractContainerBaseTest { // integration testing repository using test containers
 
     @Autowired
     public EmployeeRepository employeeRepository;
