@@ -12,6 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +28,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@Testcontainers // test container 
 public class EmployeeControllerITests {
 
+	// adding MySQL container
+	// before testing, should check -> Is docker running
+	@Container
+	private static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest")  // params -> docker image name
+					.withUsername("username")
+					.withPassword("password") // <- can assign values
+					.withDatabaseName("ems");
+	// 1) test container pull mysql docker image from the docker hub
+	// 2) Deploy MySQL in a docker container
+	// 3) Run the Integration tests with MySQL database(deployed in docker container)
+	
     @Autowired
     private MockMvc mockMvc;
 
@@ -42,7 +58,14 @@ public class EmployeeControllerITests {
 
     @Test
     public void givenEmployeeObject_whenCreateEmployee_thenReturnSavedEmployee() throws Exception {
-        // given - precondition or setup
+        
+    	System.out.println("mysql container username : " + mySQLContainer.getUsername()); // username : test(default)
+    	System.out.println("mysql container password : " + mySQLContainer.getPassword());  // password : test(default)
+    	System.out.println("mysql container database name : " + mySQLContainer.getDatabaseName());  // database name :  test(default)
+    	System.out.println("mysql container JdbcUrl : " + mySQLContainer.getJdbcUrl()); // jdbc:mysql://localhost:[port]/test(default)
+    	
+    	
+    	// given - precondition or setup
         Employee employee = Employee.builder()
                 .firstName("seoin")
                 .lastName("choi")
